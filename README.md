@@ -1,6 +1,4 @@
 ## Hornet
-Better Discord Theme.
-Allows you to customize almost everything within discord.
-
+Work In Progress
 - - -
 - - -
