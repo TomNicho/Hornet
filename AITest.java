@@ -7,7 +7,7 @@ public class AITest {
     public static void main(String[] args) {
         PGM image = new PGM("./input/test2.pgm");
         image.read();
-    } 
+    }
 
     public static Brain initialize() {
         Brain brain = new Brain(0);
