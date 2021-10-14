@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.file.ByteConvert;
+
 public class PGM extends File {
     private Integer width, height, max;
     private String tag;
@@ -52,8 +54,7 @@ public class PGM extends File {
                             }
                         } else {
                             if (!t_pixel.equals("")) {
-                                Integer shift = Integer.parseInt(t_pixel) - 128;
-                                t_pixels.add(Byte.parseByte(shift.toString()));
+                                t_pixels.add(ByteConvert.UByteSet(Integer.parseInt(t_pixel)));
                                 t_pixel = "";
                             }
                         }
@@ -103,10 +104,14 @@ public class PGM extends File {
 
             br.close();
 
-            if (success == 1) {
-                Integer shift = Integer.parseInt(t_pixel) - 128;
-                t_pixels.add(Byte.parseByte(shift.toString()));
+            t_pixels.add(ByteConvert.UByteSet(Integer.parseInt(t_pixel)));
 
+            if (Integer.parseInt(t_height) * Integer.parseInt(t_width) != t_pixels.size()) {
+                success = 0;
+                return success;
+            }
+
+            if (success == 1) {
                 this.tag = header;
                 this.width = Integer.parseInt(t_width);
                 this.height = Integer.parseInt(t_height);
@@ -139,5 +144,15 @@ public class PGM extends File {
 
     public String getTag() {
         return tag;
+    }
+
+    public float getPixelRatio(int index) {
+        int pixel = ByteConvert.UByteGet(pixels[index]);
+
+        if (pixel == 0) {
+            return 0;
+        } else {
+            return pixel / max;
+        }
     }
 }
