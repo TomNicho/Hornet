@@ -37,6 +37,12 @@ public class Brain {
         }
     }
 
+    public void compute(float[] inputs) {
+        if (inputs.length == this.membranes.get(0).neurons.size()) {
+            System.out.println("Hi");
+        }
+    }
+
     public Integer[] size() {
         Integer[] sizes = {0,0,0};
         int m_size = 0, n_size = 0, s_size = 0;

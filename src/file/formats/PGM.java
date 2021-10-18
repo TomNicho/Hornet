@@ -16,9 +16,10 @@ public class PGM extends File {
 
     public PGM(String path) {
         super(path);
+        read();
     }
 
-    public int read() {
+    private int read() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(this));
             String header = "", t_width = "", t_height = "", t_scale = "", t_pixel = "";
@@ -39,10 +40,7 @@ public class PGM extends File {
                     }
 
                     if (!comment || l == 10) {
-                        first = true;
-                        comment = false;
-
-                        if (!position[4]) {
+                        if (!position[4] && !comment) {
                             for (int i = 0; i < position.length; i++) {
                                 if (position[i]) {
                                     if (i + 1 < position.length) {
@@ -58,6 +56,9 @@ public class PGM extends File {
                                 t_pixel = "";
                             }
                         }
+
+                        first = true;
+                        comment = false;
 
                         continue;
                     }
@@ -146,7 +147,7 @@ public class PGM extends File {
         return tag;
     }
 
-    public float getPixelRatio(int index) {
+    private float getPixelRatio(int index) {
         int pixel = ByteConvert.UByteGet(pixels[index]);
 
         if (pixel == 0) {
@@ -154,5 +155,49 @@ public class PGM extends File {
         } else {
             return pixel / max;
         }
+    }
+
+    public float[] getPixelRatios() {
+        float[] out = new float[this.pixels.length];
+
+        for (int i = 0; i < this.pixels.length; i++) {
+            out[i] = getPixelRatio(i);
+        }
+
+        return out;
+    }
+
+    public float[] getInvertedPixelRatios() {
+        float[] out = new float[this.pixels.length];
+
+        for (int i = 0; i < this.pixels.length; i++) {
+            out[i] =  1f - getPixelRatio(i);
+        }
+
+        return out;
+    }
+
+    public void draw() {
+        int count = 0;
+
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+                if (j == 0) {
+                    System.out.print("\n");
+                }
+
+                float pixel = 1f - getPixelRatio(count);
+                
+                if (pixel == 1) {
+                    System.out.print("#");
+                } else {
+                    System.out.print(".");
+                }
+
+                count++;
+            }
+        }
+
+        System.out.println("\n");
     }
 }

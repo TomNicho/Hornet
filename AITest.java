@@ -5,11 +5,9 @@ import src.file.formats.PGM;
 
 public class AITest {
     public static void main(String[] args) {
-        PGM image = new PGM("./input/test2.pgm");
-        image.read();
-    }
+        PGM image = new PGM("./input/test.pgm");
+        float[] pixels = image.getInvertedPixelRatios();
 
-    public static Brain initialize() {
         Brain brain = new Brain(0);
 
         brain.addLayer(784, 0);
@@ -21,7 +19,6 @@ public class AITest {
         brain.connectLayer(1, 2);
         brain.connectLayer(2, 3);
 
-        System.out.println(Arrays.toString(brain.size()));
-        return brain;
+        brain.compute(pixels);
     }
 }
