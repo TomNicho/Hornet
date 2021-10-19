@@ -31,6 +31,10 @@ public class PGM extends File {
             while ((l = br.read()) != -1) {
                 char c = (char) l;
 
+                if (l == 13) {
+                    continue;
+                }
+
                 //\0 == New Line Always
                 //Space == New Line except from comments
                 if (c == ' ' || l == 10) {
@@ -47,7 +51,7 @@ public class PGM extends File {
                                         position[i] = false;
                                         position[i + 1] = true;
                                         break;
-                                    }
+                                    } 
                                 }
                             }
                         } else {
@@ -191,7 +195,7 @@ public class PGM extends File {
                 if (pixel == 1) {
                     System.out.print("#");
                 } else {
-                    System.out.print(".");
+                    System.out.print("-");
                 }
 
                 count++;

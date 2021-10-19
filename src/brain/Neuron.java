@@ -23,4 +23,14 @@ public class Neuron {
     public Integer size() {
         return synapses.size();
     }
+
+    public float[] compute(float input) {
+        float[] outputs = new float[this.synapses.size()];
+
+        for (int i = 0; i < this.synapses.size(); i++) {
+            outputs[i] = input * this.synapses.get(i).cost;
+        }
+
+        return outputs;
+    }
 }

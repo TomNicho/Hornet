@@ -30,4 +30,22 @@ public class Membrane {
 
         return sizes;
     }
+
+    public float[][] compute(float[] inputs) {
+        float[][] outputs = new float[this.connectedMembrane.neurons.size()][inputs.length];
+
+        if (this.neurons.size() == inputs.length) {
+            for (int i = 0; i < inputs.length; i++) {
+                Neuron n = this.neurons.get(i);
+
+                float[] output = n.compute(inputs[i] * n.weight);
+
+                for (int j = 0; j < output.length; j++) {
+                    outputs[j][i] = output[j];
+                }
+            }
+        }
+
+        return outputs;
+    }
 }

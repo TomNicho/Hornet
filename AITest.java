@@ -1,14 +1,12 @@
-import java.util.Arrays;
-
 import src.brain.Brain;
+import src.brain.Neural;
 import src.file.formats.PGM;
 
 public class AITest {
     public static void main(String[] args) {
         PGM image = new PGM("./input/test.pgm");
+        Brain brain = new Brain();
         float[] pixels = image.getInvertedPixelRatios();
-
-        Brain brain = new Brain(0);
 
         brain.addLayer(784, 0);
         brain.addLayer(16, 1);
@@ -19,6 +17,9 @@ public class AITest {
         brain.connectLayer(1, 2);
         brain.connectLayer(2, 3);
 
-        brain.compute(pixels);
+        float[] result = brain.compute(pixels);
+        int max = Neural.Max(result);
+
+        System.out.println("Result : " + max + ", Propability : " + result[max]);
     }
 }
